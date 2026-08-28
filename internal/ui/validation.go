@@ -4,9 +4,9 @@ import (
 	"errors"
 )
 
-func IntInput(err error) error {
+func ValidateInput(err error) error {
 	if err != nil {
-		return errors.New("input must be int")
+		return errors.New("input must have only number")
 	}
 
 	return nil
