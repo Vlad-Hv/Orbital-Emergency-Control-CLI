@@ -8,8 +8,11 @@ func GetUsersData() (string, int, error) {
 	var login string
 	var password int
 
-	printAuthInput()
-	_, err := fmt.Scanln(&login, &password)
+	printAuthInputLog()
+	fmt.Scanln(&login)
+
+	printAuthInputPassw()
+	_, err := fmt.Scanln(&password)
 
 	return login, password, err
 }
