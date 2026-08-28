@@ -6,16 +6,12 @@ func PrintAuth() {
 	fmt.Println("---Authorization---")
 }
 
-func printAuthInputLog() {
-	fmt.Println("\nPlease, enter login:")
-}
-
-func printAuthInputPassw() {
-	fmt.Println("Well, enter password(int):")
+func printAuthInput() {
+	fmt.Println("Please, entry login and password(int):")
 }
 
 func InvalidAuth() {
-	fmt.Println("\nincorrect login or password\n ")
+	fmt.Println("incorrect login or password\n ")
 }
 
 func Access() {
