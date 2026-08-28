@@ -13,3 +13,12 @@ func GetUsersData() (string, int, error) {
 
 	return login, password, err
 }
+
+func GetMenuOption() (int, error) {
+	var userOption int
+	printMenu()
+	askMenuOption()
+	_, err := fmt.Scanln(&userOption)
+
+	return userOption, err
+}
