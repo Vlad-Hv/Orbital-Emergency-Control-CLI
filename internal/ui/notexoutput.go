@@ -17,3 +17,7 @@ func printMenu() {
 	fmt.Println("4. Inventory / resources")
 	fmt.Println("5. Mission log")
 }
+
+func printChooseRoom() {
+	fmt.Println("Enter location ID:")
+}
