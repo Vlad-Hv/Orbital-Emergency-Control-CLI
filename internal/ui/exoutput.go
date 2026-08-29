@@ -13,3 +13,12 @@ func InvalidAuth() {
 func Access() {
 	fmt.Println("Access applyed!")
 }
+
+func FirstWarning() {
+	fmt.Println(" --------------------------------")
+	fmt.Println("|                                |")
+	fmt.Println("|           🚨WARNING🚨          |")
+	fmt.Println("|      Critical reactor state    |")
+	fmt.Println("|                                |")
+	fmt.Println(" --------------------------------")
+}

@@ -22,3 +22,10 @@ func GetMenuOption() (int, error) {
 
 	return userOption, err
 }
+
+func GetRoomID() (int, error) {
+	var id int
+	printChooseRoom()
+	_, err := fmt.Scanln(&id)
+	return id, err
+}
