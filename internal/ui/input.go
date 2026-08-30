@@ -29,3 +29,5 @@ func GetRoomID() (int, error) {
 	_, err := fmt.Scanln(&id)
 	return id, err
 }
+
+func GetStoregOption()

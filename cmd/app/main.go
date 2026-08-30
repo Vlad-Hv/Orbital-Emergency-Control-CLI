@@ -4,6 +4,8 @@ import (
 	"OStation/internal/authorization"
 	"OStation/internal/orbital"
 	"OStation/internal/ui"
+
+	"OStation/internal/orbital/storage"
 	"fmt"
 )
 
@@ -16,6 +18,8 @@ func main() {
 		return
 	}
 	ui.Access()
+	stationStorage := storage.CreateStorage()
+	inventory := storage.CreateInventory()
 	orbitalStation := orbital.CreateStation()
 
 	for {
@@ -65,7 +69,30 @@ func main() {
 		case 3:
 
 		case 4:
+			orbitalStation.CurrentZone = *orbitalStation.Zones[364]
+			for {
+				option, err := ui.GetStoregOption()
+				err = ui.ValidateInput(err)
 
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+
+				if option == 3 {
+					fmt.Println("You come back into controll room")
+					orbitalStation.CurrentZone = *orbitalStation.Zones[361]
+					break
+				}
+
+				switch option {
+				case 1:
+					ui.PrintStorage(stationStorage)
+
+				case 2:
+
+				}
+			}
 		case 5:
 
 		default:

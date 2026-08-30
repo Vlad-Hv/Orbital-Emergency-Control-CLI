@@ -21,3 +21,10 @@ func printMenu() {
 func printChooseRoom() {
 	fmt.Println("Enter location ID:")
 }
+
+func printStorageMenu() {
+	fmt.Println("\n---Storage menu---")
+	fmt.Println("1. Check all resourses")
+	fmt.Println("2. Get some resourses")
+	fmt.Println("Choose one option")
+}
