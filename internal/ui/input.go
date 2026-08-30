@@ -30,4 +30,20 @@ func GetRoomID() (int, error) {
 	return id, err
 }
 
-func GetStoregOption()
+func GetStoregOption() (int, error) {
+	var option int
+	printStorageMenu()
+	_, err := fmt.Scanln(&option)
+
+	return option, err
+}
+
+func GetTakingData() (string, int, error) {
+	var resourse string
+	var amount int
+
+	askStorageTake()
+	_, err := fmt.Scanln(&resourse, &amount)
+
+	return resourse, amount, err
+}

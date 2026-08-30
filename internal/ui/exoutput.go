@@ -1,6 +1,9 @@
 package ui
 
-import "fmt"
+import (
+	"fmt"
+	//"OStation/internal"
+)
 
 func PrintAuth() {
 	fmt.Println("---Authorization---")
@@ -21,4 +24,11 @@ func FirstWarning() {
 	fmt.Println("|      Critical reactor state    |")
 	fmt.Println("|                                |")
 	fmt.Println(" --------------------------------")
+}
+
+func PrintStorage(storage map[string]int) {
+	for resourse, amount := range storage {
+		fmt.Println("\nResourses:")
+		fmt.Println(resourse, ":", amount)
+	}
 }

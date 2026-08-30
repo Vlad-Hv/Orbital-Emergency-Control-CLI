@@ -19,7 +19,7 @@ func main() {
 	}
 	ui.Access()
 	stationStorage := storage.CreateStorage()
-	inventory := storage.CreateInventory()
+	//inventory := storage.CreateInventory()
 	orbitalStation := orbital.CreateStation()
 
 	for {
@@ -88,9 +88,24 @@ func main() {
 				switch option {
 				case 1:
 					ui.PrintStorage(stationStorage)
-
 				case 2:
+					//сделать как раз таки обработчик инвентаря, сделать изменине стореджа и перекладывать в инвентарь + валидация
+					resourse, amount, err := ui.GetTakingData()
 
+					err = ui.ValidateInput(err)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+
+					err = storage.CheckStoragesData(resourse, amount, stationStorage)
+
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+
+					//теперь сделать как раз забирание элемента и сторедж и добавление в инвентарь
 				}
 			}
 		case 5:

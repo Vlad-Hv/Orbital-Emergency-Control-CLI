@@ -26,5 +26,10 @@ func printStorageMenu() {
 	fmt.Println("\n---Storage menu---")
 	fmt.Println("1. Check all resourses")
 	fmt.Println("2. Get some resourses")
-	fmt.Println("Choose one option")
+	fmt.Println("3. Come back control room")
+	fmt.Print("Choose one option:")
+}
+
+func askStorageTake() {
+	fmt.Println("Enter what stuff and his amount you wanna get:")
 }
