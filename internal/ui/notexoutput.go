@@ -16,6 +16,7 @@ func printMenu() {
 	fmt.Println("2. Move to another section")
 	fmt.Println("4. Inventory / resources")
 	fmt.Println("5. Mission log")
+	fmt.Println("6. Check inventory")
 }
 
 func printChooseRoom() {
@@ -32,4 +33,8 @@ func printStorageMenu() {
 
 func askStorageTake() {
 	fmt.Println("Enter what stuff and his amount you wanna get:")
+}
+
+func invMessage() {
+	fmt.Println("\n====Inventory====")
 }

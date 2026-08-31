@@ -19,7 +19,7 @@ func main() {
 	}
 	ui.Access()
 	stationStorage := storage.CreateStorage()
-	//inventory := storage.CreateInventory()
+	inventory := storage.CreateInventory()
 	orbitalStation := orbital.CreateStation()
 
 	for {
@@ -31,7 +31,7 @@ func main() {
 			continue
 		}
 
-		if option == 6 {
+		if option == 0 {
 			fmt.Println("developer exit")
 			break
 		}
@@ -65,6 +65,8 @@ func main() {
 			case 365:
 				//validation and after for loop and bussiness logik of this zone
 
+			default:
+				ui.InvalidRoom()
 			}
 		case 3:
 
@@ -105,11 +107,17 @@ func main() {
 						continue
 					}
 
+					storage.TakeResourse(&stationStorage, &inventory, resourse, amount)
 					//теперь сделать как раз забирание элемента и сторедж и добавление в инвентарь
+
+				case 3:
+
 				}
 			}
 		case 5:
 
+		case 6:
+			ui.PrintInv(inventory)
 		default:
 			fmt.Println("\nMESSAGE: invalid option")
 		}
