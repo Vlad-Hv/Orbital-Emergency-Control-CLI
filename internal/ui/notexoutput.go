@@ -14,6 +14,7 @@ func printMenu() {
 	fmt.Println("\n----Operator Orbital Station Menu----")
 	fmt.Println("1. Station status")
 	fmt.Println("2. Move to another section")
+	fmt.Println("3. Check hull zones")
 	fmt.Println("4. Inventory / resources")
 	fmt.Println("5. Mission log")
 	fmt.Println("6. Check inventory")
@@ -37,4 +38,8 @@ func askStorageTake() {
 
 func invMessage() {
 	fmt.Println("\n====Inventory====")
+}
+
+func zoneMessage() {
+	fmt.Println("===Zone list===")
 }

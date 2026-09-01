@@ -2,10 +2,10 @@ package main
 
 import (
 	"OStation/internal/authorization"
+	"OStation/internal/menuflow"
 	"OStation/internal/orbital"
-	"OStation/internal/ui"
-
 	"OStation/internal/orbital/storage"
+	"OStation/internal/ui"
 	"fmt"
 )
 
@@ -41,78 +41,27 @@ func main() {
 			fmt.Println(orbitalStation.CurrentZone)
 
 		case 2:
-			id, err := ui.GetRoomID()
+			for {
+				err := menuflow.ChooseZoneMenu()
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
 
-			err = ui.ValidateInput(err)
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-
-			switch id {
-			case 361:
-				//validation is it possiblle to get into this room and after for loop and bussiness logik of this zone
-
-			case 362:
-				//validation and after for loop and bussiness logik of this zone
-
-			case 363:
-				//validation and after for loop and bussiness logik of this zone
-
-			case 364:
-				//validation and after for loop and bussiness logik of this zone
-
-			case 365:
-				//validation and after for loop and bussiness logik of this zone
-
-			default:
-				ui.InvalidRoom()
+				break
 			}
 		case 3:
-
+			ui.AllZones(orbitalStation.Zones)
 		case 4:
-			orbitalStation.CurrentZone = *orbitalStation.Zones[364]
 			for {
-				option, err := ui.GetStoregOption()
-				err = ui.ValidateInput(err)
+				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory)
 
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
 
-				if option == 3 {
-					fmt.Println("You come back into controll room")
-					orbitalStation.CurrentZone = *orbitalStation.Zones[361]
-					break
-				}
-
-				switch option {
-				case 1:
-					ui.PrintStorage(stationStorage)
-				case 2:
-					//сделать как раз таки обработчик инвентаря, сделать изменине стореджа и перекладывать в инвентарь + валидация
-					resourse, amount, err := ui.GetTakingData()
-
-					err = ui.ValidateInput(err)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-
-					err = storage.CheckStoragesData(resourse, amount, stationStorage)
-
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-
-					storage.TakeResourse(&stationStorage, &inventory, resourse, amount)
-					//теперь сделать как раз забирание элемента и сторедж и добавление в инвентарь
-
-				case 3:
-
-				}
+				break
 			}
 		case 5:
 

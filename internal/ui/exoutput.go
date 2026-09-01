@@ -1,8 +1,8 @@
 package ui
 
 import (
+	"OStation/internal/orbital"
 	"fmt"
-	//"OStation/internal"
 )
 
 func PrintAuth() {
@@ -47,4 +47,16 @@ func PrintInv(inv map[string]int) {
 
 func InvalidRoom() {
 	fmt.Println("invalid room id")
+}
+
+func ControlRoom() {
+	fmt.Println("You are already in control room")
+}
+
+func AllZones(zones map[int]*orbital.Zone) {
+	zoneMessage()
+	for _, zone := range zones {
+		fmt.Println("Name:", zone.Name)
+		fmt.Println("ID:", zone.ID, "\n ")
+	}
 }
