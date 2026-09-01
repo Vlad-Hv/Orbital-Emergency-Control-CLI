@@ -17,3 +17,7 @@ func CreateStation() OrbitalStation {
 		CurrentZone: *zones[361],
 	}
 }
+
+func (orbital *OrbitalStation) ChangeZone(ID int) {
+	orbital.CurrentZone = *orbital.Zones[ID]
+}
