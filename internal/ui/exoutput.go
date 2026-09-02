@@ -60,3 +60,21 @@ func AllZones(zones map[int]*orbital.Zone) {
 		fmt.Println("ID:", zone.ID, "\n ")
 	}
 }
+
+func ReactorReport(reactor orbital.Zone) {
+	fmt.Print("\nReactor Condition:")
+	fmt.Println(reactor.Condition)
+	fmt.Println("\nStuff to fix:")
+	for resourse, amount := range reactor.StuffToFix {
+		fmt.Println(resourse, ":", amount)
+	}
+}
+
+func ReactorStableReport(reactor orbital.Zone) {
+	fmt.Print("\nReactor Condition:")
+	fmt.Println(reactor.Condition)
+}
+
+func SuccesFixed(name string) {
+	fmt.Println(name, " fixed successfully!")
+}

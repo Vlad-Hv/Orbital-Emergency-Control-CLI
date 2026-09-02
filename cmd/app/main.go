@@ -2,6 +2,7 @@ package main
 
 import (
 	"OStation/internal/authorization"
+	state "OStation/internal/gamestate"
 	"OStation/internal/menuflow"
 	"OStation/internal/orbital"
 	"OStation/internal/orbital/storage"
@@ -10,6 +11,8 @@ import (
 )
 
 func main() {
+	var step int
+	var option int
 	ui.FirstWarning()
 	err := authorization.Auth()
 
@@ -18,12 +21,19 @@ func main() {
 		return
 	}
 	ui.Access()
+
 	stationStorage := storage.CreateStorage()
 	inventory := storage.CreateInventory()
 	orbitalStation := orbital.CreateStation()
 
 	for {
-		option, err := ui.GetMenuOption()
+		err := state.GameState(&orbitalStation)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		option, err = ui.GetMenuOption(step)
 		err = ui.ValidateInput(err)
 
 		if err != nil {
@@ -31,6 +41,7 @@ func main() {
 			continue
 		}
 
+		storage.AccessCard(step, &inventory)
 		if option == 0 {
 			fmt.Println("developer exit")
 			break
@@ -39,10 +50,12 @@ func main() {
 		switch option {
 		case 1:
 			fmt.Println(orbitalStation.CurrentZone)
+			step++
+			orbitalStation.EnergyHandler()
 
 		case 2:
 			for {
-				err := menuflow.ChooseZoneMenu()
+				err := menuflow.ChooseZoneMenu(&orbitalStation, &inventory, &step)
 				if err != nil {
 					fmt.Println(err)
 					continue
@@ -52,9 +65,11 @@ func main() {
 			}
 		case 3:
 			ui.AllZones(orbitalStation.Zones)
+			step++
+			orbitalStation.EnergyHandler()
 		case 4:
 			for {
-				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory)
+				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step)
 
 				if err != nil {
 					fmt.Println(err)
