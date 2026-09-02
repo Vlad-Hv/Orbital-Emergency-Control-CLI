@@ -10,3 +10,15 @@ func StorageCheck(stationStorage *map[string]int, resourse string) {
 		delete((*stationStorage), resourse)
 	}
 }
+
+func FixZone(zoneStuff *map[string]int, inventory *map[string]int) {
+	for resourse := range *zoneStuff {
+		(*inventory)[resourse] -= (*zoneStuff)[resourse]
+
+		if (*inventory)[resourse] == 0 {
+			delete((*inventory), resourse)
+		}
+
+		delete((*zoneStuff), resourse)
+	}
+}

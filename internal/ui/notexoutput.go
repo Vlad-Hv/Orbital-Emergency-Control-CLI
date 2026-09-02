@@ -1,6 +1,9 @@
 package ui
 
-import "fmt"
+import (
+	"OStation/internal/orbital"
+	"fmt"
+)
 
 func printAuthInput() {
 	fmt.Println("Please, entry login and password(int):")
@@ -42,4 +45,13 @@ func invMessage() {
 
 func zoneMessage() {
 	fmt.Println("===Zone list===")
+}
+
+func reactorMenu(reactor orbital.Zone) {
+	fmt.Println("---Reactor Menu---")
+	if reactor.Condition == "unstable" {
+		fmt.Println("1. Reactor condition report\n2. Try to fix it\n3. Back to control room")
+	} else {
+		fmt.Println("1. Reactor condition report\n3. Back to control room")
+	}
 }

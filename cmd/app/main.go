@@ -42,7 +42,7 @@ func main() {
 
 		case 2:
 			for {
-				err := menuflow.ChooseZoneMenu()
+				err := menuflow.ChooseZoneMenu(&orbitalStation, &inventory)
 				if err != nil {
 					fmt.Println(err)
 					continue

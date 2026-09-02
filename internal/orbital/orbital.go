@@ -21,3 +21,7 @@ func CreateStation() OrbitalStation {
 func (orbital *OrbitalStation) ChangeZone(ID int) {
 	orbital.CurrentZone = *orbital.Zones[ID]
 }
+
+func (orbital *OrbitalStation) FixZone(ID int) {
+	orbital.Zones[ID].Condition = "stable"
+}

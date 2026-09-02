@@ -1,11 +1,12 @@
 package menuflow
 
 import (
+	"OStation/internal/orbital"
 	"OStation/internal/ui"
 	"fmt"
 )
 
-func ChooseZoneMenu() error {
+func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int) error {
 	id, err := ui.GetRoomID()
 
 	err = ui.ValidateInput(err)
@@ -18,9 +19,21 @@ func ChooseZoneMenu() error {
 		ui.ControlRoom()
 		return nil
 	case 362:
+		station.ChangeZone(362)
+
+		for {
+			err := reactorMenu(station, inventory)
+
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			station.ChangeZone(361)
+			return nil
+		}
 		//validation and after for loop and bussiness logik of this zone
 		//меню реактора делать в файле зоне меню
-		return nil
+
 	case 363:
 		//validation and after for loop and bussiness logik of this zone
 

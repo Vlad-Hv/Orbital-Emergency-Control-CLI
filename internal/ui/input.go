@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"OStation/internal/orbital"
 	"fmt"
 )
 
@@ -46,4 +47,14 @@ func GetTakingData() (string, int, error) {
 	_, err := fmt.Scanln(&resourse, &amount)
 
 	return resourse, amount, err
+}
+
+func GetReactorMenu(reactor orbital.Zone) (int, error) {
+	var option int
+	reactorMenu(reactor)
+
+	_, err := fmt.Scanln(&option)
+
+	return option, err
+	//короче, я засыпаю. на сегодня мне проанализировать еще раз зоны ответственности, чтобы мб принт меню не отвечало за то, что выводить. 2 создать меню реактора и вывод состояния в зависимости от состояния, 3 добавить возможность починить реактор если достаточно ресурсов. 4 сделать, чтобы энергия тратилась, от каждого действия И после починки реактора переставало тратиться
 }
