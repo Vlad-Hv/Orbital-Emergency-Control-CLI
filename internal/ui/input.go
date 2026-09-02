@@ -15,9 +15,12 @@ func GetUsersData() (string, int, error) {
 	return login, password, err
 }
 
-func GetMenuOption() (int, error) {
+func GetMenuOption(step int) (int, error) {
 	var userOption int
 	printMenu()
+	if step == 4 {
+		accessCard()
+	}
 	askMenuOption()
 	_, err := fmt.Scanln(&userOption)
 

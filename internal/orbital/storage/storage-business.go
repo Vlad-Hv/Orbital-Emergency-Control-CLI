@@ -22,3 +22,9 @@ func FixZone(zoneStuff *map[string]int, inventory *map[string]int) {
 		delete((*zoneStuff), resourse)
 	}
 }
+
+func AccessCard(step int, inventory *map[string]int) {
+	if step >= 4 && step <= 7 {
+		(*inventory)["accessCard"] = 1
+	}
+}

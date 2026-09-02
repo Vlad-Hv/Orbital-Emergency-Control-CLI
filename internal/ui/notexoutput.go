@@ -23,6 +23,10 @@ func printMenu() {
 	fmt.Println("6. Check inventory")
 }
 
+func accessCard() {
+	fmt.Println("\nYou found access card in the controll room")
+}
+
 func printChooseRoom() {
 	fmt.Println("Enter location ID:")
 }

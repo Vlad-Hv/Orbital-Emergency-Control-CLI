@@ -26,7 +26,7 @@ func FixValidate(room map[string]int, inventory map[string]int) error {
 		if !ok {
 			return fmt.Errorf("there isnot this resourse in inventory: %s", resourse)
 		}
-		result = amount - inv_resourse
+		result = inv_resourse - amount
 		if result < 0 {
 			return errors.New("you donot have enough material in the inventory")
 		}

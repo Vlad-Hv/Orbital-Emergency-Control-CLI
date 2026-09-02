@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[string]int, inventory *map[string]int) error {
+func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[string]int, inventory *map[string]int, step *int) error {
 	orbitalStation.ChangeZone(364)
 	for {
 		option, err := ui.GetStoregOption()
@@ -19,6 +19,7 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 
 		if option == 3 {
 			fmt.Println("You come back into controll room")
+			orbitalStation.EnergyHandler()
 			orbitalStation.ChangeZone(361)
 			return nil
 		}
@@ -46,10 +47,11 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 			storage.TakeResourse(stationStorage, inventory, resourse, amount)
 			storage.StorageCheck(stationStorage, resourse)
 		}
+		*step++
 	}
 }
 
-func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int) error {
+func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
 	for {
 		option, err := ui.GetReactorMenu(*station.Zones[362])
 
@@ -75,10 +77,10 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int) err
 
 			switch station.CurrentZone.Condition {
 			case "unstable":
-				ui.ReactorReport(station.CurrentZone)
+				ui.ReactorReport(*station.CurrentZone)
 
 			case "stable":
-				ui.ReactorStableReport(station.CurrentZone)
+				ui.ReactorStableReport(*station.CurrentZone)
 
 			default:
 				fmt.Println("Developer mudak, naychis pisat pravilno")
@@ -92,11 +94,15 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int) err
 				return fmt.Errorf("ERROR: %w", err)
 			}
 
+			*step++
+
 			storage.FixZone(&station.Zones[362].StuffToFix, inventory)
 
 			station.FixZone(362)
 			ui.SuccesFixed(station.CurrentZone.Name)
 		}
+
+		*step++
 
 	}
 }

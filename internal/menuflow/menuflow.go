@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int) error {
+func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
 	id, err := ui.GetRoomID()
 
 	err = ui.ValidateInput(err)
@@ -17,17 +17,19 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int) 
 	switch id {
 	case 361:
 		ui.ControlRoom()
+		*step++
 		return nil
 	case 362:
 		station.ChangeZone(362)
 
 		for {
-			err := reactorMenu(station, inventory)
+			err := reactorMenu(station, inventory, step)
 
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
+			station.EnergyHandler()
 			station.ChangeZone(361)
 			return nil
 		}
@@ -39,7 +41,7 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int) 
 
 		return nil
 	case 364:
-		//validation and after for loop and bussiness logik of this zone
+		//добавить надпись экспортируемую "войди черезз мейн меню"
 
 		return nil
 	case 365:
