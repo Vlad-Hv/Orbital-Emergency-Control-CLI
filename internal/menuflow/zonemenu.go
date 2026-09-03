@@ -1,13 +1,14 @@
 package menuflow
 
 import (
+	history "OStation/internal/eventhistory"
 	"OStation/internal/orbital"
 	"OStation/internal/orbital/storage"
 	"OStation/internal/ui"
 	"fmt"
 )
 
-func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[string]int, inventory *map[string]int, step *int) error {
+func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[string]int, inventory *map[string]int, step *int, history *history.History) error {
 	orbitalStation.ChangeZone(364)
 	for {
 		option, err := ui.GetStoregOption()
@@ -47,6 +48,7 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 
 			storage.TakeResourse(stationStorage, inventory, resourse, amount)
 			storage.StorageCheck(stationStorage, resourse)
+			history.Add("Admin got some stuff from the storage")
 			orbitalStation.EnergyHandler()
 			orbitalStation.OxygenHandler(*step)
 		}
@@ -54,7 +56,7 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 	}
 }
 
-func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
+func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
 	for {
 		option, err := ui.GetReactorMenu(*station.Zones[362])
 
@@ -100,9 +102,12 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, ste
 			storage.FixZone(&station.Zones[362].StuffToFix, inventory)
 
 			station.FixZone(362)
+			history.Add("Reactor stabilized")
 			storage.SpecTool(inventory)
-			ui.SpesToolNotification()
 			ui.SuccesFixed(station.CurrentZone.Name)
+			ui.SpesToolNotification()
+			history.Add("Found a special tool")
+
 		}
 
 		station.OxygenHandler(*step)
@@ -111,7 +116,7 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, ste
 	}
 }
 
-func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
+func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
 	for {
 		option, err := ui.GetCommunicationMenu(*station.Zones[363])
 
@@ -156,6 +161,7 @@ func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]in
 
 			storage.FixZone(&station.CurrentZone.StuffToFix, inventory)
 			station.FixZone(363)
+			history.Add("Communications restored")
 			ui.SuccesFixed(station.CurrentZone.Name)
 		}
 		station.OxygenHandler(*step)
@@ -164,7 +170,7 @@ func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]in
 	}
 }
 
-func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
+func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
 	for {
 		option, err := ui.GetLifeSupMenu(*station.CurrentZone)
 
@@ -211,6 +217,7 @@ func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, ste
 			storage.FixZone(&station.CurrentZone.StuffToFix, inventory)
 			station.FixZone(365)
 			ui.SuccesFixed(station.CurrentZone.Name)
+			history.Add("Life Support fixed")
 		}
 		station.OxygenHandler(*step)
 		*step++

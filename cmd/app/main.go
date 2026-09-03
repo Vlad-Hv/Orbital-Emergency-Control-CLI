@@ -2,6 +2,7 @@ package main
 
 import (
 	"OStation/internal/authorization"
+	history "OStation/internal/eventhistory"
 	state "OStation/internal/gamestate"
 	"OStation/internal/menuflow"
 	"OStation/internal/orbital"
@@ -22,6 +23,7 @@ func main() {
 	}
 	ui.Access()
 
+	history := history.CreateHistory()
 	stationStorage := storage.CreateStorage()
 	inventory := storage.CreateInventory()
 	orbitalStation := orbital.CreateStation()
@@ -56,7 +58,7 @@ func main() {
 
 		case 2:
 			for {
-				err := menuflow.ChooseZoneMenu(&orbitalStation, &inventory, &step)
+				err := menuflow.ChooseZoneMenu(&orbitalStation, &inventory, &step, &history)
 				if err != nil {
 					fmt.Println(err)
 					continue
@@ -71,7 +73,7 @@ func main() {
 			orbitalStation.OxygenHandler(step)*/
 		case 4:
 			for {
-				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step)
+				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step, &history)
 
 				if err != nil {
 					fmt.Println(err)
@@ -81,7 +83,7 @@ func main() {
 				break
 			}
 		case 5:
-
+			ui.HistoryReport(history)
 		case 6:
 			err := orbital.Signal(orbitalStation)
 
@@ -92,6 +94,7 @@ func main() {
 
 			orbitalStation.SendEmergySignal()
 			ui.SignalSucces()
+			history.Add("Emergency signal sent")
 
 		case 7:
 			ui.PrintInv(inventory)

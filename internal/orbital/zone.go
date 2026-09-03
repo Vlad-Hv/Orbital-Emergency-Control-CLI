@@ -62,13 +62,13 @@ func createZones() map[int]*Zone {
 			Condition: "unstable",
 		},
 
-		366: {
+		/*366: {
 			ID:          366,
 			Name:        "Escape Module",
 			IsAvailable: false,
 			StuffToFix:  map[string]int{},
 			Condition:   "unstable",
-		},
+		},*/
 	}
 }
 

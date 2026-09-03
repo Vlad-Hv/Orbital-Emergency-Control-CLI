@@ -1,6 +1,7 @@
 package ui
 
 import (
+	history "OStation/internal/eventhistory"
 	"OStation/internal/orbital"
 	"fmt"
 )
@@ -126,4 +127,15 @@ func LifeStableSupport(lifeZone orbital.Zone) {
 
 func SpesToolNotification() {
 	fmt.Println("You found the special tool for Life Support zone forward the Reactor")
+}
+
+func HistoryReport(history history.History) {
+	missionLog()
+	if len(history) == 0 {
+		emptyLog()
+		return
+	}
+	for _, message := range history {
+		fmt.Println(message)
+	}
 }
