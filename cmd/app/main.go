@@ -66,9 +66,9 @@ func main() {
 			}
 		case 3:
 			ui.AllZones(orbitalStation.Zones)
-			step++
+			/*step++
 			orbitalStation.EnergyHandler()
-			orbitalStation.OxygenHandler(step)
+			orbitalStation.OxygenHandler(step)*/
 		case 4:
 			for {
 				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step)

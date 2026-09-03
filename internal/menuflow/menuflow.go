@@ -57,13 +57,27 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 		//validation and after for loop and bussiness logik of this zone
 
 	case 364:
-		//добавить надпись экспортируемую "войди черезз мейн меню"
-
+		ui.EnterFromMenu()
 		return nil
+
 	case 365:
-		//validation and after for loop and bussiness logik of this zone
+		station.ChangeZone(365)
 
-		return nil
+		for {
+			err := lifeSupport(station, inventory, step)
+
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+
+			station.EnergyHandler()
+			station.OxygenHandler(*step)
+			station.ChangeZone(361)
+
+			return nil
+		}
+
 	default:
 		ui.InvalidRoom()
 		return nil

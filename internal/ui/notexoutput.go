@@ -73,3 +73,13 @@ func communicationMenu(communication orbital.Zone) {
 func stationReport() {
 	fmt.Println("===Station Condition===")
 }
+
+func lifeSupportMenu(lifeSup orbital.Zone) {
+	fmt.Println("---Life Support---")
+
+	if lifeSup.Condition == "unstable" {
+		fmt.Println("1. Life Support condition report\n2. Try to fix it\n3. Back to control room")
+	} else {
+		fmt.Println("1.  Communication condition report\n3. Back to control room")
+	}
+}

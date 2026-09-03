@@ -69,3 +69,12 @@ func GetCommunicationMenu(communication orbital.Zone) (int, error) {
 	_, err := fmt.Scanln(&option)
 	return option, err
 }
+
+func GetLifeSupMenu(lifeSup orbital.Zone) (int, error) {
+	var option int
+
+	lifeSupportMenu(lifeSup)
+	_, err := fmt.Scanln(&option)
+
+	return option, err
+}

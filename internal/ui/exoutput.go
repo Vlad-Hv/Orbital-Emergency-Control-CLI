@@ -76,7 +76,7 @@ func ReactorStableReport(reactor orbital.Zone) {
 }
 
 func SuccesFixed(name string) {
-	fmt.Println(name, " fixed successfully!")
+	fmt.Println(name, "fixed successfully!")
 }
 
 func CommunicationReport(communication orbital.Zone) {
@@ -106,4 +106,24 @@ func StationReport(station orbital.OrbitalStation) {
 
 func SignalSucces() {
 	fmt.Println("Signal Sent Successfully!")
+}
+
+func EnterFromMenu() {
+	fmt.Println("Enter from Control room")
+}
+
+func LifeSupport(lifeZone orbital.Zone) {
+	fmt.Println("\nLife Support Condition:", lifeZone.Condition)
+	fmt.Println("\nStuff to fix:")
+	for resourse, amount := range lifeZone.StuffToFix {
+		fmt.Println(resourse, ":", amount)
+	}
+}
+
+func LifeStableSupport(lifeZone orbital.Zone) {
+	fmt.Println("\nLife Support Condition:", lifeZone.Condition)
+}
+
+func SpesToolNotification() {
+	fmt.Println("You found the special tool for Life Support zone forward the Reactor")
 }
