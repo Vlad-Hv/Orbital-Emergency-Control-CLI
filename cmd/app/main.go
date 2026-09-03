@@ -49,9 +49,10 @@ func main() {
 
 		switch option {
 		case 1:
-			fmt.Println(orbitalStation.CurrentZone)
+			ui.StationReport(orbitalStation)
 			step++
 			orbitalStation.EnergyHandler()
+			orbitalStation.OxygenHandler(step)
 
 		case 2:
 			for {
@@ -65,8 +66,9 @@ func main() {
 			}
 		case 3:
 			ui.AllZones(orbitalStation.Zones)
-			step++
+			/*step++
 			orbitalStation.EnergyHandler()
+			orbitalStation.OxygenHandler(step)*/
 		case 4:
 			for {
 				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step)
@@ -81,6 +83,17 @@ func main() {
 		case 5:
 
 		case 6:
+			err := orbital.Signal(orbitalStation)
+
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+
+			orbitalStation.SendEmergySignal()
+			ui.SignalSucces()
+
+		case 7:
 			ui.PrintInv(inventory)
 		default:
 			fmt.Println("\nMESSAGE: invalid option")

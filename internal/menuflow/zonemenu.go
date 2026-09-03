@@ -27,6 +27,7 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 		switch option {
 		case 1:
 			ui.PrintStorage(*stationStorage)
+			orbitalStation.EnergyHandler()
 		case 2:
 			//сделать как раз таки обработчик инвентаря, сделать изменине стореджа и перекладывать в инвентарь + валидация
 			resourse, amount, err := ui.GetTakingData()
@@ -46,6 +47,8 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 
 			storage.TakeResourse(stationStorage, inventory, resourse, amount)
 			storage.StorageCheck(stationStorage, resourse)
+			orbitalStation.EnergyHandler()
+			orbitalStation.OxygenHandler(*step)
 		}
 		*step++
 	}
@@ -61,14 +64,14 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, ste
 			return fmt.Errorf("Problem: %w", err)
 		}
 
-		err = orbital.ReactorValidate(option, *station)
+		err = orbital.ZoneValidate(option, *station)
 
 		if err != nil {
 			return fmt.Errorf("Problem: %w", err)
 		}
 
 		if option == 3 {
-			fmt.Println("Come back to the controll room!")
+			ui.LeftRoom()
 			return nil
 		}
 
@@ -94,15 +97,122 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, ste
 				return fmt.Errorf("ERROR: %w", err)
 			}
 
-			*step++
-
 			storage.FixZone(&station.Zones[362].StuffToFix, inventory)
 
 			station.FixZone(362)
+			storage.SpecTool(inventory)
+			ui.SpesToolNotification()
 			ui.SuccesFixed(station.CurrentZone.Name)
 		}
 
+		station.OxygenHandler(*step)
 		*step++
 
+	}
+}
+
+func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
+	for {
+		option, err := ui.GetCommunicationMenu(*station.Zones[363])
+
+		err = ui.ValidateInput(err)
+		if err != nil {
+			return fmt.Errorf("Problem: %w", err)
+		}
+
+		err = orbital.ZoneValidate(option, *station)
+
+		if err != nil {
+			return fmt.Errorf("ERROR: %w", err)
+		}
+
+		if option == 3 {
+			ui.LeftRoom()
+			return nil
+		}
+
+		switch option {
+		case 1:
+			switch station.CurrentZone.Condition {
+			case "unstable":
+				ui.CommunicationReport(*station.CurrentZone)
+
+			case "stable":
+				ui.CommunicationStable(*station.CurrentZone)
+			}
+
+		case 2:
+			err = orbital.FixValidate(station.CurrentZone.StuffToFix, *inventory)
+
+			if err != nil {
+				return fmt.Errorf("ERROR: %w", err)
+			}
+
+			err = orbital.CommunicationValidate(*station)
+
+			if err != nil {
+				return fmt.Errorf("ERROR: %w", err)
+			}
+
+			storage.FixZone(&station.CurrentZone.StuffToFix, inventory)
+			station.FixZone(363)
+			ui.SuccesFixed(station.CurrentZone.Name)
+		}
+		station.OxygenHandler(*step)
+		*step++
+
+	}
+}
+
+func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, step *int) error {
+	for {
+		option, err := ui.GetLifeSupMenu(*station.CurrentZone)
+
+		err = ui.ValidateInput(err)
+
+		if err != nil {
+			return fmt.Errorf("Problem: %w", err)
+		}
+
+		err = orbital.ZoneValidate(option, *station)
+
+		if err != nil {
+			return fmt.Errorf("ERROR: %w", err)
+		}
+
+		if option == 3 {
+			ui.LeftRoom()
+			return nil
+		}
+
+		switch option {
+		case 1:
+			switch station.CurrentZone.Condition {
+			case "unstable":
+				ui.LifeSupport(*station.CurrentZone)
+
+			case "stable":
+				ui.LifeStableSupport(*station.CurrentZone)
+			}
+
+		case 2:
+			err = orbital.FixValidate(station.CurrentZone.StuffToFix, *inventory)
+
+			if err != nil {
+				return fmt.Errorf("ERROR: %w", err)
+			}
+
+			err = orbital.LifeSupport(*station)
+
+			if err != nil {
+				return fmt.Errorf("ERROR: %w", err)
+			}
+
+			storage.FixZone(&station.CurrentZone.StuffToFix, inventory)
+			station.FixZone(365)
+			ui.SuccesFixed(station.CurrentZone.Name)
+		}
+		station.OxygenHandler(*step)
+		*step++
 	}
 }

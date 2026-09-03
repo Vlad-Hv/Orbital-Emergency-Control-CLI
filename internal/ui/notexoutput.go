@@ -20,7 +20,8 @@ func printMenu() {
 	fmt.Println("3. Check hull zones")
 	fmt.Println("4. Inventory / resources")
 	fmt.Println("5. Mission log")
-	fmt.Println("6. Check inventory")
+	fmt.Println("6. Send emergy signal SOS")
+	fmt.Println("7. Check inventory")
 }
 
 func accessCard() {
@@ -57,5 +58,28 @@ func reactorMenu(reactor orbital.Zone) {
 		fmt.Println("1. Reactor condition report\n2. Try to fix it\n3. Back to control room")
 	} else {
 		fmt.Println("1. Reactor condition report\n3. Back to control room")
+	}
+}
+
+func communicationMenu(communication orbital.Zone) {
+	fmt.Println("---Communication Menu---")
+	if communication.Condition == "unstable" {
+		fmt.Println("1 Communication condition report\n2. Try to fix it\n3. Back to control room")
+	} else {
+		fmt.Println("1. Communication condition \n3. Back to control room")
+	}
+}
+
+func stationReport() {
+	fmt.Println("===Station Condition===")
+}
+
+func lifeSupportMenu(lifeSup orbital.Zone) {
+	fmt.Println("---Life Support---")
+
+	if lifeSup.Condition == "unstable" {
+		fmt.Println("1. Life Support condition report\n2. Try to fix it\n3. Back to control room")
+	} else {
+		fmt.Println("1.  Communication condition report\n3. Back to control room")
 	}
 }

@@ -1,11 +1,16 @@
 package orbital
 
+import (
+	"fmt"
+)
+
 type OrbitalStation struct {
 	//добавить структуру станции и дальше по плану
-	Energy      int
-	Oxygen      int
-	Zones       map[int]*Zone
-	CurrentZone *Zone
+	Energy        int
+	Oxygen        int
+	Zones         map[int]*Zone
+	CurrentZone   *Zone
+	WasSignalSent bool
 }
 
 func CreateStation() OrbitalStation {
@@ -18,19 +23,36 @@ func CreateStation() OrbitalStation {
 	}
 }
 
-func (orbital *OrbitalStation) ChangeZone(ID int) {
-	orbital.CurrentZone = orbital.Zones[ID]
+func (o *OrbitalStation) ChangeZone(ID int) {
+	o.CurrentZone = o.Zones[ID]
 }
 
-func (orbital *OrbitalStation) FixZone(ID int) {
-	orbital.Zones[ID].Condition = "stable"
-	orbital.Zones[ID].IsAvailable = true
+func (o *OrbitalStation) FixZone(ID int) {
+	o.Zones[ID].Condition = "stable"
+	o.Zones[ID].IsAvailable = true
 }
 
-func (orbital *OrbitalStation) EnergyHandler() {
-	if orbital.Zones[362].Condition == "unstable" {
-		orbital.Energy -= 10
+func (o *OrbitalStation) EnergyHandler() {
+	if o.Zones[362].Condition == "unstable" {
+		o.Energy -= 10
 	} else {
-		orbital.Energy = 100
+		o.Energy = 100
 	}
+}
+
+func (o *OrbitalStation) OxygenHandler(step int) {
+	if o.Zones[365].Condition == "unstable" {
+		if step%3 == 0 {
+			o.Oxygen -= 10
+			fmt.Println("oxygen leak: oxygem -10")
+		} else {
+			o.Oxygen -= 5
+		}
+	} else {
+		o.Oxygen = 100
+	}
+}
+
+func (o *OrbitalStation) SendEmergySignal() {
+	o.WasSignalSent = true
 }

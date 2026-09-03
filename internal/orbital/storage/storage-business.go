@@ -28,3 +28,7 @@ func AccessCard(step int, inventory *map[string]int) {
 		(*inventory)["accessCard"] = 1
 	}
 }
+
+func SpecTool(inventory *map[string]int) {
+	(*inventory)["tool"] += 1
+}

@@ -6,9 +6,16 @@ import (
 )
 
 func GameState(orbitalStation *orbital.OrbitalStation) error {
-	if orbitalStation.Energy <= 0 {
+	switch {
+	case orbitalStation.Energy <= 0:
 		return errors.New("\n\nYOU LOST\nReason: u lost all your energy")
-	}
 
-	return nil
+	case orbitalStation.Oxygen <= 0:
+		return errors.New("\n\nYOU LOST\nReason: u lost all your oxygen")
+
+	case orbitalStation.WasSignalSent:
+		return errors.New("\n\nYOU WIN\nReason: u fixed all troubles and sent an emergy call")
+	default:
+		return nil
+	}
 }

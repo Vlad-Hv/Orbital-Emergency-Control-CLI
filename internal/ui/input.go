@@ -61,3 +61,20 @@ func GetReactorMenu(reactor orbital.Zone) (int, error) {
 	return option, err
 	//короче, я засыпаю. на сегодня мне проанализировать еще раз зоны ответственности, чтобы мб принт меню не отвечало за то, что выводить. 2 создать меню реактора и вывод состояния в зависимости от состояния, 3 добавить возможность починить реактор если достаточно ресурсов. 4 сделать, чтобы энергия тратилась, от каждого действия И после починки реактора переставало тратиться
 }
+
+func GetCommunicationMenu(communication orbital.Zone) (int, error) {
+	var option int
+	communicationMenu(communication)
+
+	_, err := fmt.Scanln(&option)
+	return option, err
+}
+
+func GetLifeSupMenu(lifeSup orbital.Zone) (int, error) {
+	var option int
+
+	lifeSupportMenu(lifeSup)
+	_, err := fmt.Scanln(&option)
+
+	return option, err
+}
