@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func ReactorValidate(option int, station OrbitalStation) error {
+func ZoneValidate(option int, station OrbitalStation) error {
 	if station.CurrentZone.Condition == "unstable" {
 		if option < 1 || option > 3 {
 			return errors.New("invalid option")
@@ -31,5 +31,21 @@ func FixValidate(room map[string]int, inventory map[string]int) error {
 			return errors.New("you donot have enough material in the inventory")
 		}
 	}
+	return nil
+}
+
+func CommunicationValidate(station OrbitalStation) error {
+	if station.Zones[362].Condition == "unstable" {
+		return errors.New("cannot fix the communication, when reactor isnot working")
+	}
+
+	return nil
+}
+
+func Signal(station OrbitalStation) error {
+	if station.Zones[363].Condition == "unstable" {
+		return errors.New("cannot send an emergy signal, when communication isnot working")
+	}
+
 	return nil
 }

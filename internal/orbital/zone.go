@@ -1,9 +1,5 @@
 package orbital
 
-import (
-	"fmt"
-)
-
 type Zone struct {
 	ID          int
 	Name        string
@@ -76,7 +72,7 @@ func createZones() map[int]*Zone {
 	}
 }
 
-func (reactor Zone) ReactorCondition() {
+/*func (reactor Zone) ReactorCondition() {
 	if reactor.Condition == "unstable" {
 		fmt.Println("Condition:", reactor.Condition)
 		fmt.Println("Stuff to fix:")
@@ -87,4 +83,4 @@ func (reactor Zone) ReactorCondition() {
 	} else {
 		fmt.Println("Condition:", reactor.Condition)
 	}
-}
+}*/

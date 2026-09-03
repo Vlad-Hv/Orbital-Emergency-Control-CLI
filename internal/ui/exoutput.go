@@ -78,3 +78,32 @@ func ReactorStableReport(reactor orbital.Zone) {
 func SuccesFixed(name string) {
 	fmt.Println(name, " fixed successfully!")
 }
+
+func CommunicationReport(communication orbital.Zone) {
+	fmt.Print("\nCommunication Condition: ")
+	fmt.Println(communication.Condition)
+	fmt.Println("\nStuff to fix:")
+	for resourse, amount := range communication.StuffToFix {
+		fmt.Println(resourse, ":", amount)
+	}
+}
+
+func CommunicationStable(communication orbital.Zone) {
+	fmt.Print("\nCommunication Condition: ")
+	fmt.Println(communication.Condition)
+}
+
+func LeftRoom() {
+	fmt.Println("Come back to the controll room!")
+}
+
+func StationReport(station orbital.OrbitalStation) {
+	stationReport()
+	fmt.Println("CurrentZone:", station.CurrentZone.Name, station.CurrentZone.ID)
+	fmt.Println("Energy:", station.Energy)
+	fmt.Println("Oxygen:", station.Oxygen)
+}
+
+func SignalSucces() {
+	fmt.Println("Signal Sent Successfully!")
+}

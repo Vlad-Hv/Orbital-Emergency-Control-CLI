@@ -18,6 +18,7 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 	case 361:
 		ui.ControlRoom()
 		*step++
+		station.OxygenHandler(*step)
 		return nil
 	case 362:
 		station.ChangeZone(362)
@@ -30,6 +31,7 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 				continue
 			}
 			station.EnergyHandler()
+			station.OxygenHandler(*step)
 			station.ChangeZone(361)
 			return nil
 		}
@@ -37,9 +39,23 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 		//меню реактора делать в файле зоне меню
 
 	case 363:
+		station.ChangeZone(363)
+
+		for {
+			err := communicationMenu(station, inventory, step)
+
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+
+			station.EnergyHandler()
+			station.OxygenHandler(*step)
+			station.ChangeZone(361)
+			return nil
+		}
 		//validation and after for loop and bussiness logik of this zone
 
-		return nil
 	case 364:
 		//добавить надпись экспортируемую "войди черезз мейн меню"
 
