@@ -83,3 +83,11 @@ func lifeSupportMenu(lifeSup orbital.Zone) {
 		fmt.Println("1.  Communication condition report\n3. Back to control room")
 	}
 }
+
+func missionLog() {
+	fmt.Println("---Mission Log---")
+}
+
+func emptyLog() {
+	fmt.Println("history is empty")
+}

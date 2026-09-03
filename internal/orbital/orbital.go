@@ -44,7 +44,7 @@ func (o *OrbitalStation) OxygenHandler(step int) {
 	if o.Zones[365].Condition == "unstable" {
 		if step%3 == 0 {
 			o.Oxygen -= 10
-			fmt.Println("oxygen leak: oxygem -10")
+			fmt.Println("oxygen leak: oxygen -10")
 		} else {
 			o.Oxygen -= 5
 		}
