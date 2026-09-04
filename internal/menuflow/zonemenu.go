@@ -2,27 +2,34 @@ package menuflow
 
 import (
 	history "OStation/internal/eventhistory"
+	state "OStation/internal/gamestate"
 	"OStation/internal/orbital"
 	"OStation/internal/orbital/storage"
 	"OStation/internal/ui"
 	"fmt"
 )
 
-func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[string]int, inventory *map[string]int, step *int, history *history.History) error {
+func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[string]int, inventory *map[string]int, step *int, history *history.History) (error, bool) {
 	orbitalStation.ChangeZone(364)
 	for {
+
+		err := state.GameState(orbitalStation)
+
+		if err != nil {
+			return err, true
+		}
 		option, err := ui.GetStoregOption()
 		err = ui.ValidateInput(err)
 
 		if err != nil {
-			return fmt.Errorf("Problem: %w", err)
+			return fmt.Errorf("Problem: %w", err), false
 		}
 
 		if option == 3 {
 			fmt.Println("You come back into controll room")
 			orbitalStation.EnergyHandler()
 			orbitalStation.ChangeZone(361)
-			return nil
+			return nil, false
 		}
 
 		switch option {
@@ -30,19 +37,19 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 			ui.PrintStorage(*stationStorage)
 			orbitalStation.EnergyHandler()
 		case 2:
-			//сделать как раз таки обработчик инвентаря, сделать изменине стореджа и перекладывать в инвентарь + валидация
+
 			resourse, amount, err := ui.GetTakingData()
 
 			err = ui.ValidateInput(err)
 			if err != nil {
-				return fmt.Errorf("Problem: %w", err)
+				return fmt.Errorf("Problem: %w", err), false
 
 			}
 
 			err = storage.CheckStoragesData(resourse, amount, *stationStorage)
 
 			if err != nil {
-				return fmt.Errorf("Problem: %w", err)
+				return fmt.Errorf("Problem: %w", err), false
 
 			}
 
@@ -56,25 +63,30 @@ func StorageMenu(orbitalStation *orbital.OrbitalStation, stationStorage *map[str
 	}
 }
 
-func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
+func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) (error, bool) {
 	for {
+		err := state.GameState(station)
+
+		if err != nil {
+			return err, true
+		}
 		option, err := ui.GetReactorMenu(*station.Zones[362])
 
 		err = ui.ValidateInput(err)
 
 		if err != nil {
-			return fmt.Errorf("Problem: %w", err)
+			return fmt.Errorf("Problem: %w", err), false
 		}
 
 		err = orbital.ZoneValidate(option, *station)
 
 		if err != nil {
-			return fmt.Errorf("Problem: %w", err)
+			return fmt.Errorf("Problem: %w", err), false
 		}
 
 		if option == 3 {
 			ui.LeftRoom()
-			return nil
+			return nil, false
 		}
 
 		switch option {
@@ -87,16 +99,14 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, ste
 			case "stable":
 				ui.ReactorStableReport(*station.CurrentZone)
 
-			default:
-				fmt.Println("Developer mudak, naychis pisat pravilno")
 			}
 
 		case 2:
-			//add validation is he able to fix
+
 			err = orbital.FixValidate(station.CurrentZone.StuffToFix, *inventory)
 
 			if err != nil {
-				return fmt.Errorf("ERROR: %w", err)
+				return fmt.Errorf("ERROR: %w", err), false
 			}
 
 			storage.FixZone(&station.Zones[362].StuffToFix, inventory)
@@ -116,24 +126,30 @@ func reactorMenu(station *orbital.OrbitalStation, inventory *map[string]int, ste
 	}
 }
 
-func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
+func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) (error, bool) {
 	for {
+
+		err := state.GameState(station)
+		if err != nil {
+			return err, true
+		}
+
 		option, err := ui.GetCommunicationMenu(*station.Zones[363])
 
 		err = ui.ValidateInput(err)
 		if err != nil {
-			return fmt.Errorf("Problem: %w", err)
+			return fmt.Errorf("Problem: %w", err), false
 		}
 
 		err = orbital.ZoneValidate(option, *station)
 
 		if err != nil {
-			return fmt.Errorf("ERROR: %w", err)
+			return fmt.Errorf("ERROR: %w", err), false
 		}
 
 		if option == 3 {
 			ui.LeftRoom()
-			return nil
+			return nil, false
 		}
 
 		switch option {
@@ -150,13 +166,13 @@ func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]in
 			err = orbital.FixValidate(station.CurrentZone.StuffToFix, *inventory)
 
 			if err != nil {
-				return fmt.Errorf("ERROR: %w", err)
+				return fmt.Errorf("ERROR: %w", err), false
 			}
 
 			err = orbital.CommunicationValidate(*station)
 
 			if err != nil {
-				return fmt.Errorf("ERROR: %w", err)
+				return fmt.Errorf("ERROR: %w", err), false
 			}
 
 			storage.FixZone(&station.CurrentZone.StuffToFix, inventory)
@@ -170,25 +186,31 @@ func communicationMenu(station *orbital.OrbitalStation, inventory *map[string]in
 	}
 }
 
-func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
+func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) (error, bool) {
 	for {
+
+		err := state.GameState(station)
+
+		if err != nil {
+			return err, true
+		}
 		option, err := ui.GetLifeSupMenu(*station.CurrentZone)
 
 		err = ui.ValidateInput(err)
 
 		if err != nil {
-			return fmt.Errorf("Problem: %w", err)
+			return fmt.Errorf("Problem: %w", err), false
 		}
 
 		err = orbital.ZoneValidate(option, *station)
 
 		if err != nil {
-			return fmt.Errorf("ERROR: %w", err)
+			return fmt.Errorf("ERROR: %w", err), false
 		}
 
 		if option == 3 {
 			ui.LeftRoom()
-			return nil
+			return nil, false
 		}
 
 		switch option {
@@ -205,13 +227,13 @@ func lifeSupport(station *orbital.OrbitalStation, inventory *map[string]int, ste
 			err = orbital.FixValidate(station.CurrentZone.StuffToFix, *inventory)
 
 			if err != nil {
-				return fmt.Errorf("ERROR: %w", err)
+				return fmt.Errorf("ERROR: %w", err), false
 			}
 
 			err = orbital.LifeSupport(*station)
 
 			if err != nil {
-				return fmt.Errorf("ERROR: %w", err)
+				return fmt.Errorf("ERROR: %w", err), false
 			}
 
 			storage.FixZone(&station.CurrentZone.StuffToFix, inventory)
