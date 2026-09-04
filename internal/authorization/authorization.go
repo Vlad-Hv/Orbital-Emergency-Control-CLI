@@ -7,7 +7,10 @@ import (
 
 func Auth() error {
 	ui.PrintAuth()
-	login, password := getLoginData()
+	login, password, err := getLoginData()
+	if err != nil {
+		return err
+	}
 	for i := 0; i < 3; i++ {
 		userLogin, userPassword, err := ui.GetUsersData()
 		if err != nil {

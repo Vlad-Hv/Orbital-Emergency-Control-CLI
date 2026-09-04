@@ -7,18 +7,21 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func getLoginData() (string, int) {
-	godotenv.Load("auth-data.env")
+func getLoginData() (string, int, error) {
+	err := godotenv.Load("auth-data.env")
 
+	if err != nil {
+		return "", 0, err
+	}
 	login := os.Getenv("LOGIN")
 	password := os.Getenv("PASSWORD")
-	passwordInt := modifyData(password)
+	passwordInt, err := modifyData(password)
 
-	return login, passwordInt
+	return login, passwordInt, err
 }
 
-func modifyData(password string) int {
-	passwordInt, _ := strconv.Atoi(password)
+func modifyData(password string) (int, error) {
+	passwordInt, err := strconv.Atoi(password)
 
-	return passwordInt
+	return passwordInt, err
 }

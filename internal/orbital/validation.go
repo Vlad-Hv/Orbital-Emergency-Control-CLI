@@ -35,8 +35,12 @@ func FixValidate(room map[string]int, inventory map[string]int) error {
 }
 
 func CommunicationValidate(station OrbitalStation) error {
-	if station.Zones[362].Condition == "unstable" && station.Zones[365].Condition == "unstable" {
-		return errors.New("cannot fix the communication, when reactor and life support isnot working")
+	if station.Zones[362].Condition == "unstable" {
+		return errors.New("cannot fix the communication, when reactor isnot working")
+	}
+
+	if station.Zones[365].Condition == "unstable" {
+		return errors.New("cannot fix the communication, when life support isnot working")
 	}
 
 	return nil
@@ -52,7 +56,7 @@ func Signal(station OrbitalStation) error {
 
 func LifeSupport(station OrbitalStation) error {
 	if station.Zones[362].Condition == "unstable" {
-		return errors.New("cannot fix the communication, when reactor isnot working")
+		return errors.New("cannot fix the life support, when reactor isnot working")
 	}
 
 	return nil

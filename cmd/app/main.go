@@ -61,20 +61,22 @@ func main() {
 				err := menuflow.ChooseZoneMenu(&orbitalStation, &inventory, &step, &history)
 				if err != nil {
 					fmt.Println(err)
-					continue
+					return
 				}
 
 				break
 			}
 		case 3:
 			ui.AllZones(orbitalStation.Zones)
-			/*step++
-			orbitalStation.EnergyHandler()
-			orbitalStation.OxygenHandler(step)*/
+
 		case 4:
 			for {
-				err := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step, &history)
+				err, isGameEnd := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step, &history)
 
+				if err != nil && isGameEnd {
+					fmt.Println(err)
+					return
+				}
 				if err != nil {
 					fmt.Println(err)
 					continue
