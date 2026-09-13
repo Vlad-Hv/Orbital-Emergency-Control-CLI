@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func PrintAuth() {
+func Auth() {
 	fmt.Println("---Authorization---")
 }
 
@@ -18,7 +18,7 @@ func Access() {
 	fmt.Println("Access applyed!")
 }
 
-func FirstWarning() {
+func Warning() {
 	fmt.Println(" --------------------------------")
 	fmt.Println("|                                |")
 	fmt.Println("|           🚨WARNING🚨          |")
@@ -27,10 +27,10 @@ func FirstWarning() {
 	fmt.Println(" --------------------------------")
 }
 
-func PrintStorage(storage map[string]int) {
-	fmt.Println("\nResourses:")
-	for resourse, amount := range storage {
-		fmt.Println(resourse, ":", amount)
+func Storage(storage map[string]int) {
+	fmt.Println("\nResources:")
+	for resource, amount := range storage {
+		fmt.Println(resource, ":", amount)
 	}
 }
 
@@ -41,8 +41,8 @@ func PrintInv(inv map[string]int) {
 		return
 	}
 
-	for resourse, amount := range inv {
-		fmt.Println(resourse, ":", amount)
+	for resource, amount := range inv {
+		fmt.Println(resource, ":", amount)
 	}
 }
 
@@ -66,8 +66,8 @@ func ReactorReport(reactor orbital.Zone) {
 	fmt.Print("\nReactor Condition:")
 	fmt.Println(reactor.Condition)
 	fmt.Println("\nStuff to fix:")
-	for resourse, amount := range reactor.StuffToFix {
-		fmt.Println(resourse, ":", amount)
+	for resource, amount := range reactor.StuffToFix {
+		fmt.Println(resource, ":", amount)
 	}
 }
 
@@ -84,8 +84,8 @@ func CommunicationReport(communication orbital.Zone) {
 	fmt.Print("\nCommunication Condition: ")
 	fmt.Println(communication.Condition)
 	fmt.Println("\nStuff to fix:")
-	for resourse, amount := range communication.StuffToFix {
-		fmt.Println(resourse, ":", amount)
+	for resource, amount := range communication.StuffToFix {
+		fmt.Println(resource, ":", amount)
 	}
 }
 
@@ -98,7 +98,7 @@ func LeftRoom() {
 	fmt.Println("Come back to the controll room!")
 }
 
-func StationReport(station orbital.OrbitalStation) {
+func StationReport(station orbital.Station) {
 	stationReport()
 	fmt.Println("CurrentZone:", station.CurrentZone.Name, station.CurrentZone.ID)
 	fmt.Println("Energy:", station.Energy)
@@ -116,8 +116,8 @@ func EnterFromMenu() {
 func LifeSupport(lifeZone orbital.Zone) {
 	fmt.Println("\nLife Support Condition:", lifeZone.Condition)
 	fmt.Println("\nStuff to fix:")
-	for resourse, amount := range lifeZone.StuffToFix {
-		fmt.Println(resourse, ":", amount)
+	for resource, amount := range lifeZone.StuffToFix {
+		fmt.Println(resource, ":", amount)
 	}
 }
 

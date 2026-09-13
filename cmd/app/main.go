@@ -14,7 +14,7 @@ import (
 func main() {
 	var step int
 	var option int
-	ui.FirstWarning()
+	ui.Warning()
 	err := authorization.Auth()
 
 	if err != nil {
@@ -23,19 +23,19 @@ func main() {
 	}
 	ui.Access()
 
-	history := history.CreateHistory()
-	stationStorage := storage.CreateStorage()
+	history := history.Create()
+	stationStorage := storage.Create()
 	inventory := storage.CreateInventory()
-	orbitalStation := orbital.CreateStation()
+	station := orbital.Create()
 
 	for {
-		err := state.GameState(&orbitalStation)
+		err := state.Handler(&station)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		option, err = ui.GetMenuOption(step)
+		option, err = ui.MenuOption(step)
 		err = ui.ValidateInput(err)
 
 		if err != nil {
@@ -43,7 +43,7 @@ func main() {
 			continue
 		}
 
-		storage.AccessCard(step, &inventory)
+		storage.AccessCard(step, inventory)
 		if option == 0 {
 			fmt.Println("developer exit")
 			break
@@ -51,14 +51,14 @@ func main() {
 
 		switch option {
 		case 1:
-			ui.StationReport(orbitalStation)
+			ui.StationReport(station)
 			step++
-			orbitalStation.EnergyHandler()
-			orbitalStation.OxygenHandler(step)
+			station.EnergyHandler()
+			station.OxygenHandler(step)
 
 		case 2:
 			for {
-				err := menuflow.ChooseZoneMenu(&orbitalStation, &inventory, &step, &history)
+				err := menuflow.ZoneMenu(&station, inventory, &step, &history)
 				if err != nil {
 					fmt.Println(err)
 					return
@@ -67,11 +67,11 @@ func main() {
 				break
 			}
 		case 3:
-			ui.AllZones(orbitalStation.Zones)
+			ui.AllZones(station.ZonesByID)
 
 		case 4:
 			for {
-				err, isGameEnd := menuflow.StorageMenu(&orbitalStation, &stationStorage, &inventory, &step, &history)
+				err, isGameEnd := menuflow.StorageMenu(&station, stationStorage, inventory, &step, &history)
 
 				if err != nil && isGameEnd {
 					fmt.Println(err)
@@ -87,14 +87,14 @@ func main() {
 		case 5:
 			ui.HistoryReport(history)
 		case 6:
-			err := orbital.Signal(orbitalStation)
+			err := orbital.Signal(station)
 
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
 
-			orbitalStation.SendEmergySignal()
+			station.SendSignalSOS()
 			ui.SignalSucces()
 			history.Add("Emergency signal sent")
 

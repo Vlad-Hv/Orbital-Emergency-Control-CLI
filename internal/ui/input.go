@@ -5,19 +5,19 @@ import (
 	"fmt"
 )
 
-func GetUsersData() (string, int, error) {
+func UsersData() (string, int, error) {
 	var login string
 	var password int
 
-	printAuthInput()
+	authInput()
 	_, err := fmt.Scanln(&login, &password)
 
 	return login, password, err
 }
 
-func GetMenuOption(step int) (int, error) {
+func MenuOption(step int) (int, error) {
 	var userOption int
-	printMenu()
+	menu()
 	if step == 4 {
 		accessCard()
 	}
@@ -27,32 +27,32 @@ func GetMenuOption(step int) (int, error) {
 	return userOption, err
 }
 
-func GetRoomID() (int, error) {
+func RoomID() (int, error) {
 	var id int
-	printChooseRoom()
+	chooseRoom()
 	_, err := fmt.Scanln(&id)
 	return id, err
 }
 
-func GetStoregOption() (int, error) {
+func StoregOption() (int, error) {
 	var option int
-	printStorageMenu()
+	storageMenu()
 	_, err := fmt.Scanln(&option)
 
 	return option, err
 }
 
-func GetTakingData() (string, int, error) {
-	var resourse string
+func TakingData() (string, int, error) {
+	var resource string
 	var amount int
 
 	askStorageTake()
-	_, err := fmt.Scanln(&resourse, &amount)
+	_, err := fmt.Scanln(&resource, &amount)
 
-	return resourse, amount, err
+	return resource, amount, err
 }
 
-func GetReactorMenu(reactor orbital.Zone) (int, error) {
+func ReactorMenu(reactor orbital.Zone) (int, error) {
 	var option int
 	reactorMenu(reactor)
 
@@ -61,7 +61,7 @@ func GetReactorMenu(reactor orbital.Zone) (int, error) {
 	return option, err
 }
 
-func GetCommunicationMenu(communication orbital.Zone) (int, error) {
+func CommunicationMenu(communication orbital.Zone) (int, error) {
 	var option int
 	communicationMenu(communication)
 
@@ -69,7 +69,7 @@ func GetCommunicationMenu(communication orbital.Zone) (int, error) {
 	return option, err
 }
 
-func GetLifeSupMenu(lifeSup orbital.Zone) (int, error) {
+func LifeSupMenu(lifeSup orbital.Zone) (int, error) {
 	var option int
 
 	lifeSupportMenu(lifeSup)
