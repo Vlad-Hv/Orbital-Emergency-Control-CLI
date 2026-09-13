@@ -9,7 +9,7 @@ cli programm to conrol orbital emergency station
 - Change the room
 - Every room (check zone report, fix zone)
 - Check zone list
-- Get some resourses from storage
+- Get some resources from storage
 - Send emergy signal
 - Check inventory
 

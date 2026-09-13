@@ -8,9 +8,15 @@ import (
 	"fmt"
 )
 
-func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, step *int, history *history.History) error {
+func ZoneMenu(station *orbital.Station, inventory map[string]int, step *int, history *history.History) error {
+	const controlRoomID int = 361
+	const reactorID int = 362
+	const communicationID int = 363
+	const storageID int = 364
+	const lifeSupportID int = 365
+
 	for {
-		id, err := ui.GetRoomID()
+		id, err := ui.RoomID()
 
 		err = ui.ValidateInput(err)
 		if err != nil {
@@ -19,19 +25,20 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 		}
 
 		switch id {
-		case 361:
+		case controlRoomID:
 			ui.ControlRoom()
 			*step++
 			station.OxygenHandler(*step)
-			err = state.GameState(station)
+			err = state.Handler(station)
 
 			if err != nil {
 				return err
 			}
 
 			return nil
-		case 362:
-			station.ChangeZone(362)
+
+		case reactorID:
+			station.ChangeZone(reactorID)
 			history.Add("Entered Reactor")
 			for {
 				err, isGameEnd := reactorMenu(station, inventory, step, history)
@@ -45,13 +52,13 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 				}
 				station.EnergyHandler()
 				station.OxygenHandler(*step)
-				station.ChangeZone(361)
+				station.ChangeZone(controlRoomID)
 				history.Add("Left Reactor")
 				return nil
 			}
 
-		case 363:
-			station.ChangeZone(363)
+		case communicationID:
+			station.ChangeZone(communicationID)
 			history.Add("Entered communication room")
 
 			for {
@@ -67,17 +74,17 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 
 				station.EnergyHandler()
 				station.OxygenHandler(*step)
-				station.ChangeZone(361)
+				station.ChangeZone(controlRoomID)
 				history.Add("Left communication room")
 				return nil
 			}
 
-		case 364:
+		case storageID:
 			ui.EnterFromMenu()
 			return nil
 
-		case 365:
-			station.ChangeZone(365)
+		case lifeSupportID:
+			station.ChangeZone(lifeSupportID)
 			history.Add("Entered Life Support zone")
 
 			for {
@@ -94,7 +101,7 @@ func ChooseZoneMenu(station *orbital.OrbitalStation, inventory *map[string]int, 
 
 				station.EnergyHandler()
 				station.OxygenHandler(*step)
-				station.ChangeZone(361)
+				station.ChangeZone(controlRoomID)
 				history.Add("Left Life Support zone")
 
 				return nil

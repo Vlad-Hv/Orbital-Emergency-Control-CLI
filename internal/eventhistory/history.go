@@ -2,7 +2,7 @@ package history
 
 type History []string
 
-func CreateHistory() History {
+func Create() History {
 	var history []string
 
 	return history

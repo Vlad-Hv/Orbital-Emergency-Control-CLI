@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func printAuthInput() {
+func authInput() {
 	fmt.Println("Please, entry login and password(int):")
 }
 
@@ -13,7 +13,7 @@ func askMenuOption() {
 	fmt.Println("Choose the option:")
 }
 
-func printMenu() {
+func menu() {
 	fmt.Println("\n----Operator Orbital Station Menu----")
 	fmt.Println("1. Station status")
 	fmt.Println("2. Move to another section")
@@ -28,14 +28,14 @@ func accessCard() {
 	fmt.Println("\nYou found access card in the controll room")
 }
 
-func printChooseRoom() {
+func chooseRoom() {
 	fmt.Println("Enter location ID:")
 }
 
-func printStorageMenu() {
+func storageMenu() {
 	fmt.Println("\n---Storage menu---")
-	fmt.Println("1. Check all resourses")
-	fmt.Println("2. Get some resourses")
+	fmt.Println("1. Check all resources")
+	fmt.Println("2. Get some resources")
 	fmt.Println("3. Come back control room")
 	fmt.Print("Choose one option:")
 }

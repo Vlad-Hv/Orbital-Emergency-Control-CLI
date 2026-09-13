@@ -1,34 +1,34 @@
 package storage
 
-func TakeResourse(storage *map[string]int, inventory *map[string]int, resourse string, amount int) {
-	(*storage)[resourse] -= amount
-	(*inventory)[resourse] += amount
+func TakeResource(storage map[string]int, inventory map[string]int, resource string, amount int) {
+	storage[resource] -= amount
+	inventory[resource] += amount
 }
 
-func StorageCheck(stationStorage *map[string]int, resourse string) {
-	if (*stationStorage)[resourse] == 0 {
-		delete((*stationStorage), resourse)
+func StorageCheck(stationStorage map[string]int, resource string) {
+	if stationStorage[resource] == 0 {
+		delete(stationStorage, resource)
 	}
 }
 
-func FixZone(zoneStuff *map[string]int, inventory *map[string]int) {
-	for resourse := range *zoneStuff {
-		(*inventory)[resourse] -= (*zoneStuff)[resourse]
+func FixZone(requiredStuff map[string]int, inventory map[string]int) {
+	for resource := range requiredStuff {
+		inventory[resource] -= requiredStuff[resource]
 
-		if (*inventory)[resourse] == 0 {
-			delete((*inventory), resourse)
+		if inventory[resource] == 0 {
+			delete(inventory, resource)
 		}
 
-		delete((*zoneStuff), resourse)
+		delete(requiredStuff, resource)
 	}
 }
 
-func AccessCard(step int, inventory *map[string]int) {
+func AccessCard(step int, inventory map[string]int) {
 	if step >= 4 && step <= 7 {
-		(*inventory)["accessCard"] = 1
+		inventory["accessCard"] = 1
 	}
 }
 
-func SpecTool(inventory *map[string]int) {
-	(*inventory)["tool"] += 1
+func SpecTool(inventory map[string]int) {
+	inventory["tool"] += 1
 }

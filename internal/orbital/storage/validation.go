@@ -4,19 +4,25 @@ import (
 	"errors"
 )
 
-func CheckStoragesData(resourse string, amount int, storage map[string]int) error {
-	resAmount, ok := storage[resourse]
+var (
+	errNameIncorrect     = errors.New("ERROR: incorrect resource name")
+	errResourceNotEnough = errors.New("ERROR: in storage not enough resource")
+	errAmountInvalid     = errors.New("ERROR: invalid resource amount")
+)
+
+func CheckData(resource string, amount int, storage map[string]int) error {
+	resAmount, ok := storage[resource]
 
 	if !ok {
-		return errors.New("ERROR: incorrect resourse name")
+		return errNameIncorrect
 	}
 
 	if resAmount < amount {
-		return errors.New("ERROR: in storage not enough resourse")
+		return errResourceNotEnough
 	}
 
 	if amount < 1 {
-		return errors.New("ERROR: invalid resourse amount")
+		return errAmountInvalid
 	}
 
 	return nil

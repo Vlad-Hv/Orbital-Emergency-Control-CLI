@@ -1,6 +1,6 @@
 package storage
 
-func CreateStorage() map[string]int {
+func Create() map[string]int {
 	return map[string]int{
 		"metal":   13,
 		"fuel":    5,

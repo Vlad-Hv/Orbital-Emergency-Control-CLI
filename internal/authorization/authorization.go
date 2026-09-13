@@ -6,19 +6,19 @@ import (
 )
 
 func Auth() error {
-	ui.PrintAuth()
-	login, password, err := getLoginData()
+	ui.Auth()
+	login, password, err := loginData()
 	if err != nil {
 		return err
 	}
 	for i := 0; i < 3; i++ {
-		userLogin, userPassword, err := ui.GetUsersData()
+		userLogin, userPassword, err := ui.UsersData()
 		if err != nil {
 			ui.InvalidAuth()
 			continue
 		}
 
-		if login == userLogin && password == userPassword {
+		if userLogin == login && userPassword == password {
 			return nil
 		}
 		ui.InvalidAuth()

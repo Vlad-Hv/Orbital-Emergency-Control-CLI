@@ -4,55 +4,60 @@ import (
 	"fmt"
 )
 
-type OrbitalStation struct {
-	//добавить структуру станции и дальше по плану
-	Energy        int
-	Oxygen        int
-	Zones         map[int]*Zone
-	CurrentZone   *Zone
-	WasSignalSent bool
+type Station struct {
+	Energy      int
+	Oxygen      int
+	ZonesByID   map[int]*Zone
+	CurrentZone *Zone
+	SignalSent  bool
 }
 
-func CreateStation() OrbitalStation {
+func Create() Station {
 	zones := createZones()
-	return OrbitalStation{
+	return Station{
 		Energy:      100,
 		Oxygen:      100,
-		Zones:       zones,
+		ZonesByID:   zones,
 		CurrentZone: zones[361],
 	}
 }
 
-func (o *OrbitalStation) ChangeZone(ID int) {
-	o.CurrentZone = o.Zones[ID]
+func (s *Station) ChangeZone(ID int) {
+	s.CurrentZone = s.ZonesByID[ID]
 }
 
-func (o *OrbitalStation) FixZone(ID int) {
-	o.Zones[ID].Condition = "stable"
-	o.Zones[ID].IsAvailable = true
+func (s *Station) FixZone(ID int) {
+	s.ZonesByID[ID].Condition = "stable"
+	s.ZonesByID[ID].IsAvailable = true
 }
 
-func (o *OrbitalStation) EnergyHandler() {
-	if o.Zones[362].Condition == "unstable" {
-		o.Energy -= 10
+func (s *Station) EnergyHandler() {
+	reactorID := 362
+	if s.ZonesByID[reactorID].Condition == "unstable" {
+		s.Energy -= 10
 	} else {
-		o.Energy = 100
+		s.Energy = 100
 	}
 }
 
-func (o *OrbitalStation) OxygenHandler(step int) {
-	if o.Zones[365].Condition == "unstable" {
+func (s *Station) OxygenHandler(step int) {
+	lifeSupportID := 365
+	condition := s.ZonesByID[lifeSupportID].Condition
+
+	if condition == "unstable" {
 		if step%3 == 0 {
-			o.Oxygen -= 10
+			s.Oxygen -= 10
 			fmt.Println("oxygen leak: oxygen -10")
 		} else {
-			o.Oxygen -= 5
+			s.Oxygen -= 5
 		}
-	} else {
-		o.Oxygen = 100
+	}
+
+	if condition == "stable" {
+		s.Oxygen = 100
 	}
 }
 
-func (o *OrbitalStation) SendEmergySignal() {
-	o.WasSignalSent = true
+func (o *Station) SendSignalSOS() {
+	o.SignalSent = true
 }

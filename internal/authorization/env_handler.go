@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func getLoginData() (string, int, error) {
+func loginData() (string, int, error) {
 	err := godotenv.Load("auth-data.env")
 
 	if err != nil {

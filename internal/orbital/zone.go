@@ -61,26 +61,5 @@ func createZones() map[int]*Zone {
 			},
 			Condition: "unstable",
 		},
-
-		/*366: {
-			ID:          366,
-			Name:        "Escape Module",
-			IsAvailable: false,
-			StuffToFix:  map[string]int{},
-			Condition:   "unstable",
-		},*/
 	}
 }
-
-/*func (reactor Zone) ReactorCondition() {
-	if reactor.Condition == "unstable" {
-		fmt.Println("Condition:", reactor.Condition)
-		fmt.Println("Stuff to fix:")
-
-		for resourse, amount := range reactor.StuffToFix {
-			fmt.Println(resourse, ":", amount)
-		}
-	} else {
-		fmt.Println("Condition:", reactor.Condition)
-	}
-}*/
